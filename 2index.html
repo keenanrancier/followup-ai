@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FollowUp AI — Automated Lead Follow-Up for Small Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #534AB7;
+    --purple-light: #EEEDFE;
+    --purple-mid: #AFA9EC;
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --coral: #993C1D;
+    --coral-light: #FAECE7;
+    --red-light: #FCEBEB;
+    --red-text: #791F1F;
+    --gray-100: #F8F8F6;
+    --gray-200: #EFEFEB;
+    --gray-300: #D3D1C7;
+    --gray-500: #888780;
+    --gray-700: #444441;
+    --gray-900: #1A1A18;
+    --white: #FFFFFF;
+    --border: rgba(0,0,0,0.1);
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+    --radius: 10px;
+    --radius-lg: 16px;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--gray-100);
+    color: var(--gray-900);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HERO / NAV ── */
+  .top-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.3px;
+  }
+  .logo span { color: var(--purple); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+  .nav-btn.ghost {
+    color: var(--gray-700);
+    background: transparent;
+    border-color: var(--border);
+  }
+  .nav-btn.ghost:hover { background: var(--gray-100); }
+  .nav-btn.primary {
+    background: var(--purple);
+    color: #fff;
+  }
+  .nav-btn.primary:hover { background: #3C3489; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 64px 2rem 48px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--purple-light);
+    color: var(--purple);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    letter-spacing: 0.01em;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--purple);
+  }
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    color: var(--gray-900);
+    margin-bottom: 16px;
+  }
+  h1 em { color: var(--purple); font-style: normal; }
+  .hero p {
+    font-size: 17px;
+    color: var(--gray-500);
+    max-width: 480px;
+    margin: 0 auto 28px;
+    line-height: 1.65;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary { background: var(--purple); color: #fff; }
+  .btn-primary:hover { background: #3C3489; transform: translateY(-1px); box-shadow: var(--shadow); }
+  .btn-outline { background: var(--white); color: var(--gray-700); border: 1px solid var(--border); }
+  .btn-outline:hover { background: var(--gray-100); }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 24px 2rem;
+    flex-wrap: wrap;
+  }
+  .stat-item { text-align: center; }
+  .stat-item .num {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.5px;
+  }
+  .stat-item .lbl { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+
+  /* ── DASHBOARD CONTAINER ── */
+  .dashboard-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem 80px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 14px;
+  }
+
+  /* ── METRICS ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 600px) { .metrics { grid-template-columns: repeat(2,1fr); } }
+
+  .metric-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .metric-card .m-label {
+    font-size: 11px;
+    color: var(--gray-500);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .metric-card .m-val {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .metric-card .m-change {
+    font-size: 11px;
+    color: var(--teal);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ── LEADS TABLE ── */
+  .leads-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .leads-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .leads-header h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-900);
+  }
+  .filter-row {
+    display: flex;
+    gap: 6px;
+  }
+  .filter-btn {
+    font-family: var(--font);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--gray-500);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .filter-btn.active {
+    background: var(--purple-light);
+    color: var(--purple);
+    border-color: var(--purple-mid);
+    font-weight: 500;
+  }
+
+  .lead-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .lead-row:last-child { border-bottom: none; }
+  .lead-row:hover { background: var(--gray-100); }
+  .lead-row.active { background: var(--purple-light); border-left: 3px solid var(--purple); }
+
+  .lead-name { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+  .lead-meta { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .badge-new { background: var(--purple-light); color: var(--purple); }
+  .badge-contacted { background: var(--teal-light); color: #085041; }
+  .badge-warm { background: var(--amber-light); color: var(--amber); }
+  .badge-lost { background: var(--red-light); color: var(--red-text); }
+
+  .source-pill {
+    font-size: 11px;
+    color: var(--gray-500);
+    background: var(--gray-100);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .ai-trigger {
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--purple);
+    color: var(--purple);
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.12s;
+  }
+  .ai-trigger:hover { background: var(--purple-light); }
+  .ai-trigger:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── AI PANEL ── */
+  .ai-panel {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    display: none;
+    animation: slideIn 0.2s ease;
+    margin-bottom: 16px;
+  }
+  .ai-panel.visible { display: block; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: var(--purple-light);
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-top h3 { font-size: 14px; font-weight: 600; color: var(--purple); }
+  .panel-close {
+    font-family: var(--font);
+    font-size: 12px;
+    color: var(--gray-500);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+  }
+  .panel-close:hover { color: var(--gray-900); }
+
+  .panel-body { padding: 16px 18px; }
+
+  .msg-block {
+    margin-bottom: 12px;
+  }
+  .msg-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .msg-label::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+  .msg-label.email::before { background: var(--purple); }
+  .msg-label.sms::before { background: var(--teal); }
+
+  .msg-content {
+    background: var(--gray-100);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--gray-900);
+    line-height: 1.65;
+    white-space: pre-wrap;
+    font-family: var(--font);
+    min-height: 48px;
+  }
+
+  .typing::after {
+    content: '▋';
+    animation: blink 0.8s step-end infinite;
+    color: var(--purple);
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .panel-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .btn-send {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 20px;
+    background: var(--purple);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .btn-send:hover { background: #3C3489; }
+  .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-copy {
+    font-family: var(--font);
+    font-size: 13px;
+    padding: 8px 16px;
+    background: transparent;
+    color: var(--gray-700);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .btn-copy:hover { background: var(--gray-100); }
+  .confirm-msg {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--teal);
+    display: none;
+  }
+  .confirm-msg.visible { display: block; }
+
+  /* ── ADD LEAD FORM ── */
+  .add-lead-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .add-lead-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .add-lead-header h2 { font-size: 14px; font-weight: 600; color: var(--gray-900); }
+  .add-lead-header span { font-size: 20px; color: var(--gray-500); user-select: none; }
+  .add-lead-body { padding: 16px 18px; display: none; }
+  .add-lead-body.open { display: block; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    font-family: var(--font);
+    font-size: 13px;
+    padding: 8px 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    color: var(--gray-900);
+    background: var(--white);
+    outline: none;
+    transition: border 0.12s;
+  }
+  .form-group input:focus, .form-group select:focus {
+    border-color: var(--purple);
+  }
+
+  .form-submit {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 20px;
+    background: var(--purple);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.12s;
+  }
+  .form-submit:hover { background: #3C3489; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    background: var(--gray-200);
+    border-top: 1px solid var(--border);
+    padding: 64px 2rem;
+    text-align: center;
+  }
+  .how-section h2 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    margin-bottom: 8px;
+  }
+  .how-section .sub {
+    color: var(--gray-500);
+    margin-bottom: 40px;
+    font-size: 15px;
+  }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  @media (max-width: 600px) { .steps-grid { grid-template-columns: 1fr; } }
+
+  .step-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
+    text-align: left;
+    box-shadow: var(--shadow);
+  }
+  .step-num-badge {
+    width: 32px; height: 32px;
+    background: var(--purple);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .step-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .step-card p { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+
+  /* ── PRICING ── */
+  .pricing-section {
+    padding: 64px 2rem;
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .pricing-section h2 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    margin-bottom: 8px;
+  }
+  .pricing-section .sub {
+    color: var(--gray-500);
+    margin-bottom: 36px;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 560px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  .price-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    text-align: left;
+    box-shadow: var(--shadow);
+  }
+  .price-card.featured {
+    border-color: var(--purple);
+    border-width: 2px;
+  }
+  .featured-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--purple);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .price-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .price-amount {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+  .price-amount span { font-size: 16px; font-weight: 400; color: var(--gray-500); }
+  .price-desc { font-size: 13px; color: var(--gray-500); margin-bottom: 20px; }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    font-size: 13px;
+    color: var(--gray-700);
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .feature-list li::before {
+    content: '';
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--teal-light);
+    border: 1.5px solid var(--teal);
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--gray-900);
+    color: var(--gray-300);
+    text-align: center;
+    padding: 28px 2rem;
+    font-size: 13px;
+  }
+  footer strong { color: var(--white); }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+    animation: slideIn 0.2s ease;
+  }
+  .modal h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .modal p { font-size: 14px; color: var(--gray-500); margin-bottom: 20px; line-height: 1.6; }
+  .modal-input {
+    width: 100%;
+    font-family: var(--font);
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    outline: none;
+    transition: border 0.12s;
+  }
+  .modal-input:focus { border-color: var(--purple); }
+  .modal-actions { display: flex; gap: 10px; }
+  .modal-cancel {
+    font-family: var(--font);
+    font-size: 14px;
+    padding: 9px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--gray-700);
+    cursor: pointer;
+  }
+  .modal-submit {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 9px 22px;
+    background: var(--purple);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    flex: 1;
+  }
+  .modal-submit:hover { background: #3C3489; }
+</style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<nav class="top-bar">
+  <div class="logo">Follow<span>Up</span> AI</div>
+  <div class="nav-links">
+    <a href="#how" class="nav-btn ghost">How it works</a>
+    <a href="#pricing" class="nav-btn ghost">Pricing</a>
+    <button class="nav-btn primary" onclick="openModal()">Get started free</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">AI-powered follow-ups</div>
+  <h1>Never lose a lead to<br><em>slow follow-up</em> again</h1>
+  <p>FollowUp AI instantly writes personalized emails and texts for every new lead — so your business responds in minutes, not days.</p>
+  <div class="hero-cta">
+    <button class="btn btn-primary" onclick="openModal()">Start free trial</button>
+    <a class="btn btn-outline" href="#dashboard">See the demo below</a>
+  </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats-row">
+  <div class="stat-item"><div class="num">78%</div><div class="lbl">of customers buy from the first responder</div></div>
+  <div class="stat-item"><div class="num">5 min</div><div class="lbl">avg. response time with FollowUp AI</div></div>
+  <div class="stat-item"><div class="num">3×</div><div class="lbl">more leads converted on average</div></div>
+</div>
+
+<!-- ── LIVE DASHBOARD ── -->
+<div class="dashboard-wrap" id="dashboard">
+  <div class="section-label">Live demo — try it yourself</div>
+
+  <!-- Metrics -->
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="m-label">Total leads</div>
+      <div class="m-val" id="m-total">6</div>
+      <div class="m-change" id="m-total-ch">&#8679; 2 this week</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">New today</div>
+      <div class="m-val" id="m-new">3</div>
+      <div class="m-change">needs follow-up</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Followed up</div>
+      <div class="m-val" id="m-done">2</div>
+      <div class="m-change">&#8679; by AI</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Reply rate</div>
+      <div class="m-val">34%</div>
+      <div class="m-change">&#8679; industry avg 12%</div>
+    </div>
+  </div>
+
+  <!-- AI Panel -->
+  <div class="ai-panel" id="ai-panel">
+    <div class="panel-top">
+      <h3 id="panel-title">AI follow-up ready</h3>
+      <button class="panel-close" onclick="closePanel()">Close ✕</button>
+    </div>
+    <div class="panel-body">
+      <div class="msg-block">
+        <div class="msg-label email">Email draft</div>
+        <div class="msg-content" id="email-out">Generating...</div>
+      </div>
+      <div class="msg-block">
+        <div class="msg-label sms">SMS draft</div>
+        <div class="msg-content" id="sms-out">Generating...</div>
+      </div>
+      <div class="panel-actions">
+        <button class="btn-send" id="send-btn" onclick="markSent()">Send both now</button>
+        <button class="btn-copy" onclick="copyMessages()">Copy messages</button>
+        <span class="confirm-msg" id="confirm-msg">✓ Sent! Lead updated.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leads Table -->
+  <div class="leads-card">
+    <div class="leads-header">
+      <h2>Leads</h2>
+      <div class="filter-row">
+        <button class="filter-btn active" onclick="filterLeads('all', this)">All</button>
+        <button class="filter-btn" onclick="filterLeads('new', this)">New</button>
+        <button class="filter-btn" onclick="filterLeads('contacted', this)">Followed up</button>
+        <button class="filter-btn" onclick="filterLeads('warm', this)">Warm</button>
+      </div>
+    </div>
+    <div id="leads-list"></div>
+  </div>
+
+  <!-- Add Lead -->
+  <div class="add-lead-card">
+    <div class="add-lead-header" onclick="toggleAddLead()">
+      <h2>+ Add a lead manually</h2>
+      <span id="add-toggle">&#8964;</span>
+    </div>
+    <div class="add-lead-body" id="add-lead-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full name</label>
+          <input type="text" id="f-name" placeholder="Jane Smith">
+        </div>
+        <div class="form-group">
+          <label>Business name</label>
+          <input type="text" id="f-biz" placeholder="Smith Consulting (optional)">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Service requested</label>
+          <input type="text" id="f-service" placeholder="e.g. Drain cleaning">
+        </div>
+        <div class="form-group">
+          <label>Lead source</label>
+          <select id="f-source">
+            <option>Website form</option>
+            <option>Facebook ad</option>
+            <option>Instagram</option>
+            <option>Referral</option>
+            <option>Phone call</option>
+            <option>Manual entry</option>
+          </select>
+        </div>
+      </div>
+      <button class="form-submit" onclick="addLead()">Add lead &amp; generate follow-up</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<div class="how-section" id="how">
+  <h2>How FollowUp AI works</h2>
+  <p class="sub">Set it up once. Let AI handle the rest.</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num-badge">1</div>
+      <h3>Lead comes in</h3>
+      <p>From your website, Facebook, Instagram, or manually entered — all in one place.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num-badge">2</div>
+      <h3>AI writes the message</h3>
+      <p>A personalized email and SMS is drafted instantly — specific to their request and your business.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num-badge">3</div>
+      <h3>You review and send</h3>
+      <p>Approve in one click. Or let it auto-send. Either way, your lead hears from you within minutes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRICING ── -->
+<div class="pricing-section" id="pricing">
+  <h2>Simple, honest pricing</h2>
+  <p class="sub">Start free. Upgrade when you're ready.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amount">Free <span>/ 14 days</span></div>
+      <div class="price-desc">Everything you need to try FollowUp AI risk-free.</div>
+      <ul class="feature-list">
+        <li>Up to 20 leads</li>
+        <li>AI email + SMS drafts</li>
+        <li>Lead dashboard</li>
+        <li>Manual lead entry</li>
+        <li>Email support</li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="featured-badge">Most popular</div>
+      <div class="price-name">Pro</div>
+      <div class="price-amount">$79 <span>/ month</span></div>
+      <div class="price-desc">For small businesses serious about not losing leads.</div>
+      <ul class="feature-list">
+        <li>Unlimited leads</li>
+        <li>AI email + SMS (auto-send)</li>
+        <li>Website form integration</li>
+        <li>Facebook &amp; Instagram leads</li>
+        <li>Custom follow-up sequences</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+  </div>
+  <div style="margin-top:24px">
+    <button class="btn btn-primary" onclick="openModal()">Start your free trial</button>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <strong>FollowUp AI</strong> — Automated lead follow-up for small business<br>
+  <span style="margin-top:6px;display:block;opacity:0.5">&#169; 2026 FollowUp AI. All rights reserved.</span>
+</footer>
+
+<!-- ── SIGNUP MODAL ── -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h3>Start your free trial</h3>
+    <p>No credit card required. Get set up in 5 minutes and start following up with leads today.</p>
+    <input class="modal-input" type="text" placeholder="Your name" id="modal-name">
+    <input class="modal-input" type="email" placeholder="Business email" id="modal-email">
+    <input class="modal-input" type="text" placeholder="Business name" id="modal-biz">
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-submit" onclick="submitTrial()">Get started free →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const leads = [
+  {id:0, name:"Sarah Mitchell", biz:"Mitchell Dental", source:"Website form", status:"new", age:"2h ago", service:"Emergency repair"},
+  {id:1, name:"James Okoye", biz:"Okoye Rentals", source:"Facebook ad", status:"new", age:"4h ago", service:"Drain cleaning"},
+  {id:2, name:"Priya Sharma", biz:"Sharma Law", source:"Instagram", status:"warm", age:"1d ago", service:"Water heater install"},
+  {id:3, name:"Tom Barker", biz:"", source:"Manual entry", status:"contacted", age:"2d ago", service:"Leak fix"},
+  {id:4, name:"Linda Chen", biz:"Chen Bakery", source:"Website form", status:"new", age:"5h ago", service:"Full inspection"},
+  {id:5, name:"Raj Patel", biz:"Patel Motors", source:"Facebook ad", status:"lost", age:"5d ago", service:"Pipe replacement"},
+];
+
+const statusClass = {new:"badge-new", contacted:"badge-contacted", warm:"badge-warm", lost:"badge-lost"};
+const statusLabel = {new:"New", contacted:"Followed up", warm:"Warm", lost:"Lost"};
+
+let activeLead = null;
+let currentFilter = "all";
+
+const emails = [
+  l => `Hi ${l.name.split(" ")[0]},\n\nThanks for reaching out about your ${l.service.toLowerCase()}!\n\nWe'd love to help and have availability this week. Here are a few times that work:\n\n• Tomorrow, 10am–12pm\n• Tomorrow, 2pm–4pm\n• Thursday, any time\n\nJust reply and we'll lock it in — no commitment needed.\n\nBest,\nAcme Plumbing Co.\n(250) 555-0192`,
+  l => `Hey ${l.name.split(" ")[0]},\n\nFollowing up on your ${l.service.toLowerCase()} inquiry from ${l.age}.\n\nWe haven't forgotten you! We can still help and would love to give you a free, no-obligation quote.\n\nAre you still looking? What time works best to connect this week?\n\nWarm regards,\nAcme Plumbing Co.`,
+  l => `Hi ${l.name.split(" ")[0]},\n\nI'm reaching out about your ${l.service.toLowerCase()} request. We specialize in exactly this — and we offer same-week service with upfront pricing.\n\nMost customers save 15–25% compared to larger chains. Can I get you a quick quote?\n\nThanks,\nAcme Plumbing Co.`,
+];
+
+const smsList = [
+  l => `Hi ${l.name.split(" ")[0]}! Acme Plumbing here re: your ${l.service.toLowerCase()} request. We have openings this week. Reply YES and we'll call you to lock in a time!`,
+  l => `Hey ${l.name.split(" ")[0]}, this is Acme Plumbing following up on the ${l.service.toLowerCase()}. Still interested in a free quote? Just reply here!`,
+  l => `${l.name.split(" ")[0]} — Acme Plumbing. Saw your inquiry about ${l.service.toLowerCase()}. We can get to you this week. Call (250) 555-0192 or reply to book.`,
+];
+
+function renderLeads() {
+  const list = document.getElementById("leads-list");
+  const filtered = currentFilter === "all" ? leads : leads.filter(l => l.status === currentFilter);
+  list.innerHTML = filtered.map(l => `
+    <div class="lead-row${activeLead === l.id ? " active" : ""}" onclick="selectLead(${l.id})">
+      <div>
+        <div class="lead-name">${l.name}</div>
+        <div class="lead-meta">${l.biz || "Individual"} &middot; ${l.service} &middot; ${l.age}</div>
+      </div>
+      <span class="source-pill">${l.source}</span>
+      <span class="badge ${statusClass[l.status]}">${statusLabel[l.status]}</span>
+      <button class="ai-trigger" onclick="event.stopPropagation();generateFollowUp(${l.id})" ${l.status === "lost" ? "disabled" : ""}>AI follow-up →</button>
+    </div>
+  `).join("");
+  updateStats();
+}
+
+function updateStats() {
+  document.getElementById("m-total").textContent = leads.length;
+  document.getElementById("m-new").textContent = leads.filter(l => l.status === "new").length;
+  document.getElementById("m-done").textContent = leads.filter(l => l.status === "contacted").length;
+}
+
+function selectLead(id) { activeLead = id; renderLeads(); }
+
+function filterLeads(f, el) {
+  currentFilter = f;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  el.classList.add("active");
+  renderLeads();
+}
+
+function generateFollowUp(id) {
+  activeLead = id;
+  const l = leads[id];
+  const panel = document.getElementById("ai-panel");
+  panel.classList.add("visible");
+  document.getElementById("panel-title").textContent = `AI follow-up for ${l.name}`;
+  document.getElementById("email-out").textContent = "";
+  document.getElementById("email-out").classList.add("typing");
+  document.getElementById("sms-out").textContent = "";
+  document.getElementById("sms-out").classList.add("typing");
+  document.getElementById("confirm-msg").classList.remove("visible");
+  document.getElementById("send-btn").disabled = false;
+
+  const ei = Math.floor(Math.random() * emails.length);
+  const si = Math.floor(Math.random() * smsList.length);
+
+  setTimeout(() => {
+    document.getElementById("email-out").classList.remove("typing");
+    document.getElementById("email-out").textContent = emails[ei](l);
+  }, 900);
+  setTimeout(() => {
+    document.getElementById("sms-out").classList.remove("typing");
+    document.getElementById("sms-out").textContent = smsList[si](l);
+  }, 1400);
+
+  renderLeads();
+  panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function markSent() {
+  if (activeLead === null) return;
+  leads[activeLead].status = "contacted";
+  document.getElementById("send-btn").disabled = true;
+  document.getElementById("confirm-msg").classList.add("visible");
+  renderLeads();
+}
+
+function copyMessages() {
+  const email = document.getElementById("email-out").textContent;
+  const sms = document.getElementById("sms-out").textContent;
+  navigator.clipboard?.writeText("EMAIL:\n" + email + "\n\nSMS:\n" + sms);
+  const btn = event.target;
+  btn.textContent = "Copied!";
+  setTimeout(() => btn.textContent = "Copy messages", 1800);
+}
+
+function closePanel() {
+  document.getElementById("ai-panel").classList.remove("visible");
+  activeLead = null;
+  renderLeads();
+}
+
+function toggleAddLead() {
+  const body = document.getElementById("add-lead-body");
+  const tog = document.getElementById("add-toggle");
+  body.classList.toggle("open");
+  tog.textContent = body.classList.contains("open") ? "⌃" : "⌄";
+}
+
+function addLead() {
+  const name = document.getElementById("f-name").value.trim();
+  const biz = document.getElementById("f-biz").value.trim();
+  const service = document.getElementById("f-service").value.trim();
+  const source = document.getElementById("f-source").value;
+  if (!name || !service) { alert("Please enter a name and service."); return; }
+  const newLead = { id: leads.length, name, biz, source, status: "new", age: "just now", service };
+  leads.unshift(newLead);
+  newLead.id = 0;
+  leads.forEach((l, i) => l.id = i);
+  document.getElementById("f-name").value = "";
+  document.getElementById("f-biz").value = "";
+  document.getElementById("f-service").value = "";
+  renderLeads();
+  setTimeout(() => generateFollowUp(0), 200);
+}
+
+function openModal() {
+  document.getElementById("modal").classList.add("open");
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.remove("open");
+}
+
+async function submitTrial() {
+  const name = document.getElementById("modal-name").value.trim();
+  const email = document.getElementById("modal-email").value.trim();
+  const biz = document.getElementById("modal-biz").value.trim();
+  if (!name || !email) { alert("Please fill in your name and email."); return; }
+  const submitBtn = document.querySelector(".modal-submit");
+  submitBtn.textContent = "Sending...";
+  submitBtn.disabled = true;
+  try {
+    await fetch("https://formspree.io/f/meenaoal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ name, email, business: biz || "Not provided", _subject: "New FollowUp AI trial signup: " + name })
+    });
+    closeModal();
+    document.getElementById("modal-name").value = "";
+    document.getElementById("modal-email").value = "";
+    document.getElementById("modal-biz").value = "";
+    alert("Thanks " + name + "! You'll hear from us at " + email + " within 24 hours to get you set up.");
+  } catch(e) {
+    alert("Something went wrong. Please email us at getfollowup.ai@gmail.com");
+  }
+  submitBtn.textContent = "Get started free →";
+  submitBtn.disabled = false;
+}
+
+document.getElementById("modal").addEventListener("click", function(e) {
+  if (e.target === this) closeModal();
+});
+
+renderLeads();
+</script>
+</body>
+</html>
